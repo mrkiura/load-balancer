@@ -1,4 +1,4 @@
 FROM python:3
-RUN pip install --no-cache-dir flask
+RUN pip install flask
 COPY ./app.py /app/app.py
-CMD ["Python", "/app/app.py"]
+CMD ["python", "/app/app.py"]
