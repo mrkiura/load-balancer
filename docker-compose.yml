@@ -3,24 +3,24 @@ services:
   mango1:
     image: server
     environment:
-      - APP=mango
+      - APP=tururu
     ports:
       - "8081:5000"
   mango2:
     image: server
     environment:
-      - APP=mango
+      - APP=tururu
     ports:
       - "8082:5000"
   apple1:
     image: server
     environment:
-      - APP=apple
+      - APP=wawawa
     ports:
       - "9081:5000"
   apple2:
     image: server
     environment:
-      - APP=apple
+      - APP=wawawa
     ports:
       - "9082:5000"
