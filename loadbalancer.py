@@ -25,15 +25,11 @@ def router():
         return 'Not Found. tururu', 404
 
 
-@loadbalancer.route('/tururu')
-def tururu():
-    backend = random.choice(TURURU_BACKENDS)
-    response = requests.get(f'http://{backend}')
-    return response.content, response.status_code
-
-
-@loadbalancer.route('/wawawa')
-def wawawa():
-    backend = random.choice(WAWAWA_BACKENDS)
-    response = requests.get(f'http://{backend}')
-    return response.content, response.status_code
+@loadbalancer.route("/<path>")
+def path_router(path):
+    for entry in config["paths"]:
+        if f"/{path}" == entry["path"]:
+            backend = random.choice(entry["servers"])
+            response = requests.get(f'http://{backend}')
+            return response.content, response.status_code
+    return 'Not Found. tururu', 404
