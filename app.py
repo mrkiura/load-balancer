@@ -8,6 +8,10 @@ app = Flask(__name__)
 def sample():
     return f"This is a {os.environ['APP']} application."
 
+@app.route("/health")
+def health():
+    return "OK"
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
