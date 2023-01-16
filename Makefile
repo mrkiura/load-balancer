@@ -3,7 +3,7 @@ test:
 	pytest --disable-warnings || true
 	docker-compose down
 
-reload:
+build:
 	docker-compose down
 	docker build -t server .
 
