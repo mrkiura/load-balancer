@@ -1,0 +1,22 @@
+import yaml
+from typing import TypedDict, Dict, Sequence
+from config import Config
+
+from models import Server
+
+
+
+
+def load_config(path: str):
+    with open(path) as config_file:
+        config = yaml.load(config_file, Loader=yaml.FullLoader)
+    return config
+
+
+def transform_backends_from_config(config: Config) -> Dict[str, Sequence[Server]]:
+    register = {}
+    for entry in config.get("hosts", []):
+        register.update({entry["host"]: [Server(endpoint) for endpoint in entry["servers"]]})
+    for entry in config.get("paths", []):
+        register.update({entry["path"]: [Server(endpoint) for endpoint in entry["servers"]]})
+    return register
