@@ -5,8 +5,6 @@ from config import Config
 from models import Server
 
 
-
-
 def load_config(path: str):
     with open(path) as config_file:
         config = yaml.load(config_file, Loader=yaml.FullLoader)
