@@ -19,6 +19,10 @@ class Server:
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
             self.healthy = False
 
+    @property
+    def is_healthy(self):
+        return self.healthy
+
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Server):
             return self.endpoint == other.endpoint
