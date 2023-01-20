@@ -5,7 +5,7 @@ class Server:
     def __init__(self, endpoint: str, path:str="/healthcheck"):
         self.endpoint = endpoint
         self.path = path
-        self.healthy = False
+        self.healthy = True
         self.scheme = "http://"
         self.timeout = 1
 
