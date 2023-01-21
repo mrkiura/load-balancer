@@ -36,3 +36,18 @@ def test_transform_backends_from_config():
     assert output['/mango'][1] == Server('localhost:8082')
     assert output['/apple'][0] == Server('localhost:9081')
     assert output['/apple'][1] == Server('localhost:9082')
+
+def test_get_healthy_server():
+    healthy_server = Server('localhost:8081')
+    unhealthy_server = Server('localhost:8082')
+    unhealthy_server.healthy = False
+    register = {'www.mango.com': [healthy_server, unhealthy_server],
+            'www.apple.com': [healthy_server, healthy_server],
+            'www.orange.com': [unhealthy_server, unhealthy_server],
+            '/mango': [healthy_server, unhealthy_server],
+            '/apple': [unhealthy_server, unhealthy_server]}
+    assert get_healthy_server('www.mango.com', register) == healthy_server
+    assert get_healthy_server('www.apple.com', register) == healthy_server
+    assert get_healthy_server('www.orange.com', register) is None
+    assert get_healthy_server('/mango', register) == healthy_server
+    assert get_healthy_server('/apple', register) is None
