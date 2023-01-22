@@ -25,3 +25,9 @@ def transform_backends_from_config(config: Config) -> Dict[str, Sequence[Server]
     for entry in config.get("paths", []):
         register.update({entry["path"]: [Server(endpoint) for endpoint in entry["servers"]]})
     return register
+
+def healthcheck(register: Dict[str, Sequence[Server]]):
+    for host in register:
+        for server in register[host]:
+            server.healthcheck_and_update_status()
+    return register
