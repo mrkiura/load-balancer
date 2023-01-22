@@ -8,7 +8,7 @@ app = Flask(__name__)
 def sample():
     return f"This is a {os.environ['APP']} application."
 
-@app.route("/health")
+@app.route("/healthcheck")
 def health():
     return "OK"
 
