@@ -6,12 +6,12 @@ from config import Config
 from models import Server
 
 
-def load_config(path: str):
+def load_config(path: str) -> Config:
     with open(path) as config_file:
         config = yaml.load(config_file, Loader=yaml.FullLoader)
     return config
 
-def get_healthy_server(host, register) -> Server | None:
+def get_healthy_server(host: str, register) -> Server | None:
     try:
         server = random.choice([server for server in register[host] if server.is_healthy])
         return server
