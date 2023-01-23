@@ -51,3 +51,22 @@ def test_get_healthy_server():
     assert get_healthy_server('www.orange.com', register) is None
     assert get_healthy_server('/mango', register) == healthy_server
     assert get_healthy_server('/apple', register) is None
+
+def test_healthcheck():
+    config = yaml.safe_load('''
+        hosts:
+          - host: www.apple.com
+            servers:
+              - localhost:8081
+              - localhost:8888
+          - host: www.mango.com
+            servers:
+              - localhost:9081
+              - localhost:4444
+    ''')
+    register = healthcheck(transform_backends_from_config(config))
+    print("register", register)
+    assert register["www.apple.com"][0].healthy
+    assert not register["www.apple.com"][1].healthy
+    assert register["www.mango.com"][0].healthy
+    assert not register["www.mango.com"][1].healthy
