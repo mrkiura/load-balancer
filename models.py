@@ -2,6 +2,9 @@ import requests
 
 
 class Server:
+    """
+    A server is a representation of a backend server.
+    It has an endpoint, a path, a healthy status and a timeout."""
     def __init__(self, endpoint: str, path:str="/healthcheck"):
         self.endpoint = endpoint
         self.path = path
