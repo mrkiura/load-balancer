@@ -65,7 +65,6 @@ def test_healthcheck():
               - localhost:4444
     ''')
     register = healthcheck(transform_backends_from_config(config))
-    print("register", register)
     assert register["www.apple.com"][0].healthy
     assert not register["www.apple.com"][1].healthy
     assert register["www.mango.com"][0].healthy

@@ -21,7 +21,6 @@ def router():
     """Route requests to the correct backend server based on the host.
     """
     updated_register = healthcheck(register)
-    print("updated_register", updated_register)
     host_header = request.headers.get('Host')
     for entry in config['hosts']:
         if host_header == entry['host']:
