@@ -31,16 +31,18 @@ def router():
             response = requests.get(f'http://{healthy_server.endpoint}')
             return response.content, response.status_code
 
-    else:
-        return 'Not Found. tururu', 404
+    return 'Not Found.', 404
 
 
 @loadbalancer.route("/<path>")
 def path_router(path):
     """Route requests to the correct backend server based on the path."""
+    updated_register = healthcheck(register)
     for entry in config["paths"]:
         if f"/{path}" == entry["path"]:
-            backend = random.choice(entry["servers"])
-            response = requests.get(f'http://{backend}')
+            healthy_server = get_healthy_server(entry["path"], updated_register)
+            if not healthy_server:
+                return 'No backend servers available.', 503
+            response = requests.get(f'http://{healthy_server.endpoint}')
             return response.content, response.status_code
-    return 'Not Found. tururu', 404
+    return 'Not Found.', 404
