@@ -41,6 +41,11 @@ def test_path_routing_wawawa(client):
     assert b'This is a wawawa application.' in result.data
 
 
+def test_path_routing_orange(client):
+    result = client.get('/orange')
+    assert b'No backend servers available.' in result.data
+
+
 def test_path_routing_not_found(client):
     result = client.get('/wuuuuui')
     assert b'Not Found' in result.data
