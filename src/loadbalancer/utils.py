@@ -1,9 +1,9 @@
 import yaml
 import random
 from typing import TypedDict, Dict, Sequence
-from config import Config
+from loadbalancer.config import Config
 
-from models import Server
+from loadbalancer.models import Server
 
 
 def load_config(path: str) -> Config:

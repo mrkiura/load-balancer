@@ -1,7 +1,7 @@
 import yaml
 
-from models import Server
-from utils import transform_backends_from_config, get_healthy_server, healthcheck
+from loadbalancer.models import Server
+from loadbalancer.utils import transform_backends_from_config, get_healthy_server, healthcheck
 
 
 def test_transform_backends_from_config():

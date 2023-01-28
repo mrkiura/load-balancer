@@ -3,20 +3,20 @@ import random
 import requests
 from flask import Flask, request
 
-from utils import (
+from loadbalancer.utils import (
     get_healthy_server,
     healthcheck,
     load_config,
     transform_backends_from_config
 )
+from loadbalancer.config import config
 
-loadbalancer = Flask(__name__)
+balancer = Flask(__name__)
 
-config = load_config("loadbalancer.yaml")
 register = transform_backends_from_config(config)
 
 
-@loadbalancer.route('/')
+@balancer.route('/')
 def router():
     """Route requests to the correct backend server based on the host.
     """
@@ -33,7 +33,7 @@ def router():
     return 'Not Found.', 404
 
 
-@loadbalancer.route("/<path>")
+@balancer.route("/<path>")
 def path_router(path):
     """Route requests to the correct backend server based on the path."""
     updated_register = healthcheck(register)

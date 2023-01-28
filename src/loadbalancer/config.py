@@ -1,4 +1,5 @@
 import yaml
+import os
 from typing import TypedDict, List, Sequence
 
 
@@ -21,5 +22,5 @@ def load_config(path: str) -> Config:
         config = yaml.load(config_file, Loader=yaml.FullLoader)
     return config
 
-
-config = load_config('loadbalancer.yaml')
+filename = './src/loadbalancer/loadbalancer.yaml'
+config = load_config(os.path.abspath(filename))

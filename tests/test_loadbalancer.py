@@ -1,12 +1,15 @@
 import pytest
+from rich import print
+import sys
+
+from loadbalancer.loadbalancer import balancer
 
 
-from loadbalancer import loadbalancer
 
 
 @pytest.fixture
 def client():
-    with loadbalancer.test_client() as client:
+    with balancer.test_client() as client:
         yield client
 
 

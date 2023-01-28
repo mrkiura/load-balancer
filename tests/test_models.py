@@ -1,7 +1,7 @@
 import pytest
 import responses
 
-from models import Server
+from loadbalancer.models import Server
 
 
 @pytest.fixture
