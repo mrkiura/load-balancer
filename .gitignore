@@ -2,3 +2,5 @@
 .*cache
 *cache*
 .env
+src/loadbalancer.egg-info/*
+__pycache__/*
