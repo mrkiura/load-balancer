@@ -4,9 +4,11 @@ from flask import Flask
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def sample():
     return f"This is a {os.environ['APP']} application."
+
 
 @app.route("/healthcheck")
 def health():
