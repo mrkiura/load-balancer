@@ -1,7 +1,7 @@
 import yaml
 
 from loadbalancer.models import Server
-from loadbalancer.utils import transform_backends_from_config, get_healthy_server, healthcheck
+from loadbalancer.utils import transform_backends_from_config, get_healthy_server, healthcheck, process_header_rules
 
 
 def test_transform_backends_from_config():
@@ -69,3 +69,33 @@ def test_healthcheck():
     assert not register["www.apple.com"][1].healthy
     assert register["www.mango.com"][0].healthy
     assert not register["www.mango.com"][1].healthy
+
+def test_process_header_rules():
+    input = yaml.safe_load("""
+        hosts:
+          - host: www.mango.com
+            header_rules:
+              add:
+                MyCustomHeader: "Test"
+              remove:
+                Host: www.mango.com
+            servers:
+              - localhost:8081
+              - localhost:8082
+          - host: www.apple.com
+            servers:
+              - localhost:9081
+              - localhost:9082
+        paths:
+          - path: /mango
+            servers:
+              - localhost:8081
+              - localhost:8082
+          - path: /apple
+            servers:
+              - localhost:9081
+              - localhost:9082
+            """)
+    headers = {'Host': 'www.mango.com'}
+    results = process_header_rules(input, "www.mango.com", headers)
+    assert results == {"MyCustomHeader": "Test"}
