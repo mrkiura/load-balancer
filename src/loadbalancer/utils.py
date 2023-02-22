@@ -21,6 +21,7 @@ def transform_backends_from_config(config: Config) -> Dict[str, Sequence[Server]
         register.update({entry["path"]: [Server(endpoint) for endpoint in entry["servers"]]})
     return register
 
+
 def get_healthy_server(host: str, register) -> Server | None:
     """Get a healthy server from a list of healthy servers."""
     try:
@@ -37,3 +38,18 @@ def healthcheck(register: Dict[str, Sequence[Server]]):
         for server in register[host]:
             server.healthcheck_and_update_status()
     return register
+
+
+def process_header_rules(config, host, rules):
+    for entry in config.get("hosts", []):
+        if host == entry.get("host"):
+            header_rules = entry.get("header_rules", {})
+            for instruction, header in header_rules.items():
+                match instruction:
+                    case "add":
+                        rules.update(header)
+                    case "remove":
+                        for header_name in header.keys():
+                            if header_name in rules:
+                                del rules[header_name]
+    return rules
