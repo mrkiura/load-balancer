@@ -27,7 +27,8 @@ def router():
             healthy_server = get_healthy_server(entry["host"], updated_register)
             if not healthy_server:
                 return 'No backend servers available.', 503
-            response = requests.get(f'http://{healthy_server.endpoint}')
+            headers = process_header_rules(config, host_header, {k: v for k, v in request.headers.items()})
+            response = requests.get(f'http://{healthy_server.endpoint}', headers=headers)
             return response.content, response.status_code
 
     return 'Not Found.', 404
