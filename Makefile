@@ -17,6 +17,7 @@ stop:
 	docker-compose down
 
 run:
-	docker-compose down
 	docker-compose up -d
 	docker-compose logs -f
+
+reload:build run
