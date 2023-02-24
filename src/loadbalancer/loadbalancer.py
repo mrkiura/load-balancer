@@ -6,8 +6,8 @@ from flask import Flask, request
 from loadbalancer.utils import (
     get_healthy_server,
     healthcheck,
-    load_config,
-    transform_backends_from_config
+    transform_backends_from_config,
+    process_header_rules
 )
 from loadbalancer.config import config
 
