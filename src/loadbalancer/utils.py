@@ -12,6 +12,7 @@ def load_config(path: str) -> Config:
         config = yaml.load(config_file, Loader=yaml.FullLoader)
     return config
 
+
 def transform_backends_from_config(config: Config) -> Dict[str, Sequence[Server]]:
     """Transform the config into a register of servers."""
     register = {}
